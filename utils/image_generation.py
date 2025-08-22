@@ -1,14 +1,29 @@
 from vertexai.vision_models import ImageGenerationModel
 from PIL import Image
+import streamlit as st
+from google.oauth2 import service_account
+import vertexai
+import json
 
-# Lazy-load the model only when needed
+# Lazy-load model only when needed
 _image_model = None
+
+def _init_vertex_ai():
+    """Initialize Vertex AI with credentials from Streamlit secrets"""
+    service_account_info = dict(st.secrets["google_service_account"])
+    credentials = service_account.Credentials.from_service_account_info(service_account_info)
+
+    PROJECT_ID = st.secrets["PROJECT_ID"]
+    LOCATION = st.secrets["LOCATION"]
+
+    vertexai.init(project=PROJECT_ID, location=LOCATION, credentials=credentials)
+
 
 def generate_image(prompt, path):
     """Generate storybook illustration from text chunk with fallback prompts."""
     global _image_model
     if _image_model is None:
-        # Initialize the model only once, after credentials are set
+        _init_vertex_ai()
         _image_model = ImageGenerationModel.from_pretrained("imagegeneration@005")
 
     try:
