@@ -29,7 +29,7 @@ if generate_btn:
         story = generate_story(concept, language)
         chunks = split_into_chunks(story, max_words=60)
 
-        content = []  # (text, image) pairs
+        content = []  
         os.makedirs("static", exist_ok=True)
 
         for idx, chunk in enumerate(chunks):
@@ -45,4 +45,5 @@ if generate_btn:
         export_storybook([c for c, _ in content], [i for _, i in content], "storybook.pdf", concept=concept)
         st.success("✅ Storybook created!")
         st.download_button("📥 Download PDF", open("storybook.pdf", "rb"), "storybook.pdf")
+
 
