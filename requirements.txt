@@ -1,0 +1,9 @@
+streamlit
+pandas
+PyPDF2
+reportlab
+Pillow
+sentencepiece   # (needed if we use some models)
+diffusers       # (if using Stable Diffusion locally)
+transformers    # (if needed)
+google-cloud-aiplatform
