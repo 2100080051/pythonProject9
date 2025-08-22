@@ -1,22 +1,19 @@
 import vertexai
 from vertexai.generative_models import GenerativeModel
 import streamlit as st
-import os, json
+import json
+from google.oauth2 import service_account
 
-# Convert st.secrets entry to a dict and save as JSON file
+# Load credentials dict from Streamlit secrets
 service_account_info = dict(st.secrets["google_service_account"])
-with open("gcp_key.json", "w") as f:
-    json.dump(service_account_info, f)
+credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
-# Point Google SDK to this key
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp_key.json"
-
-# Load project details from secrets
+# Get project/location from secrets
 PROJECT_ID = st.secrets["PROJECT_ID"]
 LOCATION = st.secrets["LOCATION"]
 
-# Initialize Vertex AI
-vertexai.init(project=PROJECT_ID, location=LOCATION)
+# Initialize Vertex AI with explicit credentials
+vertexai.init(project=PROJECT_ID, location=LOCATION, credentials=credentials)
 
 # Load Gemini model
 model = GenerativeModel("gemini-2.0-flash")
