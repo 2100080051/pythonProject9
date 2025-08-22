@@ -5,7 +5,7 @@ from google.oauth2 import service_account
 import vertexai
 import json
 
-# Lazy-load model only when needed
+
 _image_model = None
 
 def _init_vertex_ai():
@@ -33,7 +33,7 @@ def generate_image(prompt, path):
             return path
         else:
             print("⚠️ No image returned for:", prompt)
-            # Fallback retry with a more descriptive style
+            
             fallback_prompt = f"{prompt}. Storybook style, colorful, cartoon, child-friendly illustration."
             print("🔄 Retrying with fallback prompt:", fallback_prompt)
             images = _image_model.generate_images(prompt=fallback_prompt)
@@ -46,3 +46,4 @@ def generate_image(prompt, path):
     except Exception as e:
         print("❌ Image generation error:", e)
         return None
+
