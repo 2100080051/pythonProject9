@@ -3,9 +3,10 @@ from vertexai.generative_models import GenerativeModel
 import streamlit as st
 import os, json
 
-# Save service account JSON from Streamlit secrets to a temp file
+# Convert st.secrets entry to a dict and save as JSON file
+service_account_info = dict(st.secrets["google_service_account"])
 with open("gcp_key.json", "w") as f:
-    f.write(json.dumps(st.secrets["google_service_account"]))
+    json.dump(service_account_info, f)
 
 # Point Google SDK to this key
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp_key.json"
