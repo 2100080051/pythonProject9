@@ -7,3 +7,4 @@ sentencepiece   # (needed if we use some models)
 diffusers       # (if using Stable Diffusion locally)
 transformers    # (if needed)
 google-cloud-aiplatform
+python-dotenv
