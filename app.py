@@ -42,6 +42,7 @@ if generate_btn:
                 st.image(image_path, caption=f"Page {idx+1} Illustration")
             content.append((chunk, image_path))
 
-        export_storybook(content, "storybook.pdf")
+        export_storybook([c for c, _ in content], [i for _, i in content], "storybook.pdf", concept=concept)
         st.success("✅ Storybook created!")
         st.download_button("📥 Download PDF", open("storybook.pdf", "rb"), "storybook.pdf")
+
