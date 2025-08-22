@@ -4,18 +4,18 @@ import streamlit as st
 import json
 from google.oauth2 import service_account
 
-# Load credentials dict from Streamlit secrets
+
 service_account_info = dict(st.secrets["google_service_account"])
 credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
-# Get project/location from secrets
+
 PROJECT_ID = st.secrets["PROJECT_ID"]
 LOCATION = st.secrets["LOCATION"]
 
-# Initialize Vertex AI with explicit credentials
+
 vertexai.init(project=PROJECT_ID, location=LOCATION, credentials=credentials)
 
-# Load Gemini model
+
 model = GenerativeModel("gemini-2.0-flash")
 
 
@@ -30,3 +30,4 @@ def split_into_chunks(text, max_words=60):
     """Split story into smaller chunks (pages)."""
     words = text.split()
     return [" ".join(words[i:i+max_words]) for i in range(0, len(words), max_words)]
+
